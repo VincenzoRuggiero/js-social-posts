@@ -63,7 +63,10 @@ const posts = [
 
 const containerHTML = document.getElementById("container");
 
+let likesCounter;
+
 posts.forEach((post) => {
+  likesCounter = post.likes;
   containerHTML.innerHTML += `
   <div class="post">
   <div class="post__header">
@@ -96,4 +99,13 @@ posts.forEach((post) => {
   </div>            
 </div>
   `;
+});
+
+let likeBtnHTML = document.querySelector(".like-button");
+let totalLikes = document.querySelector(".js-likes-counter");
+
+likeBtnHTML.addEventListener("click", function () {
+  likeBtnHTML.classList.add("like-button--liked");
+  likesCounter++;
+  totalLikes.innerHTML = likesCounter;
 });
