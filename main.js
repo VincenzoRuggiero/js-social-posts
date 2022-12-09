@@ -64,48 +64,120 @@ const posts = [
 const containerHTML = document.getElementById("container");
 
 let likesCounter;
+let totalLikes;
 
-posts.forEach((post) => {
-  likesCounter = post.likes;
-  containerHTML.innerHTML += `
-  <div class="post">
-  <div class="post__header">
-      <div class="post-meta">                    
-          <div class="post-meta__icon">
-              <img class="profile-pic" src="${post.author["image"]}" alt="Phil Mangione">                    
-          </div>
-          <div class="post-meta__data">
-              <div class="post-meta__author">${post.author["name"]}</div>
-              <div class="post-meta__time">${post.created}</div>
-          </div>                    
-      </div>
-  </div>
-  <div class="post__text">${post.content}</div>
-  <div class="post__image">
-      <img src="${post.media}" alt="">
-  </div>
-  <div class="post__footer">
-      <div class="likes js-likes">
-          <div class="likes__cta">
-              <a class="like-button  js-like-button" href="#" data-postid="${post.id}">
-                  <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                  <span class="like-button__label">Mi Piace</span>
-              </a>
-          </div>
-          <div class="likes__counter">
-              Piace a <b id="like-counter-1" class="js-likes-counter">${post.likes}</b> persone
-          </div>
-      </div> 
-  </div>            
-</div>
-  `;
+let likesBtn;
+let likedArr = [];
+
+let buttonClicked = false;
+
+function creaCard() {}
+
+posts.forEach((post, index) => {
+  //Header del Post
+  const postCard = document.createElement("div");
+  postCard.className = "post";
+
+  const postHeader = document.createElement("div");
+  postHeader.className = "post__header";
+  postCard.appendChild(postHeader);
+
+  const postMeta = document.createElement("div");
+  postMeta.className = "post-meta";
+  postHeader.appendChild(postMeta);
+
+  const postMetaIcon = document.createElement("div");
+  postMetaIcon.className = "post-meta__icon";
+  postMeta.appendChild(postMetaIcon);
+
+  const profilePic = document.createElement("img");
+  profilePic.className = "profile-pic";
+  profilePic.src = post.author.image;
+  postMetaIcon.appendChild(profilePic);
+
+  const postMetaData = document.createElement("div");
+  postMetaData.className = "post-meta__data";
+  postMeta.appendChild(postMetaData);
+
+  const postMetaAuthor = document.createElement("div");
+  postMetaAuthor.className = "post-meta__author";
+  postMetaAuthor.appendChild(document.createTextNode(post.author.name));
+  postMetaData.appendChild(postMetaAuthor);
+
+  const postMetaTime = document.createElement("div");
+  postMetaTime.className = "post-meta__time";
+  postMetaTime.appendChild(document.createTextNode(post.created));
+  postMetaData.appendChild(postMetaTime);
+
+  //Main del post
+  const postText = document.createElement("div");
+  postText.className = "post__text";
+  postText.appendChild(document.createTextNode(post.content));
+  postCard.appendChild(postText);
+
+  const postImageDiv = document.createElement("div");
+  postImageDiv.className = "post__image";
+  postCard.appendChild(postImageDiv);
+
+  const postImage = document.createElement("img");
+  postImage.src = post.media;
+  postImageDiv.appendChild(postImage);
+
+  //Footer del post
+  const postFooter = document.createElement("div");
+  postFooter.className = "post__footer";
+  postCard.appendChild(postFooter);
+
+  const likesDiv = document.createElement("div");
+  likesDiv.className = "likes js-likes";
+  postFooter.appendChild(likesDiv);
+
+  const likesCTA = document.createElement("div");
+  likesCTA.className = "likes__cta";
+  likesDiv.appendChild(likesCTA);
+
+  const likeBtn = document.createElement("a");
+  likeBtn.className = "like-button  js-like-button";
+  likeBtn.href = "#";
+  likeBtn.setAttribute("data-postid", `${post.id}`);
+  likesCTA.appendChild(likeBtn);
+
+  const likeBtnIcon = document.createElement("i");
+  likeBtnIcon.className = "like-button__icon fas fa-thumbs-up";
+  likeBtnIcon.setAttribute("aria-hidden", "=true");
+  likeBtn.appendChild(likeBtnIcon);
+
+  const likeBtnLabel = document.createElement("span");
+  likeBtnLabel.className = "like-button__label";
+  likeBtnLabel.appendChild(document.createTextNode("Mi piace"));
+  likeBtn.appendChild(likeBtnLabel);
+
+  const likesCounter = document.createElement("div");
+  likesCounter.classList.add("likes__counter");
+  let totalLikes = post.likes;
+  likesCounter.innerHTML = `Piace a ${post.likes} persone`;
+
+  likesDiv.appendChild(likesCounter);
+
+  containerHTML.appendChild(postCard);
+
+  likeBtn.addEventListener("click", function () {
+    likesCounter.innerHTML = `Piace a ${totalLikes++} persone`;
+    likeBtn.classList.add("like-button--liked");
+  });
 });
 
-let likeBtnHTML = document.querySelector(".like-button");
-let totalLikes = document.querySelector(".js-likes-counter");
+//=========
 
-likeBtnHTML.addEventListener("click", function () {
-  likeBtnHTML.classList.add("like-button--liked");
-  likesCounter++;
-  totalLikes.innerHTML = likesCounter;
-});
+// let likeBtnHTML = document.querySelector(".like-button");
+// let totalLikes = document.querySelector(".js-likes-counter");
+
+// likeBtnHTML.addEventListener("click", function () {
+//   likeBtnHTML.classList.add("like-button--liked");
+//   totalLikes.innerHTML = likesCounter++;
+//   addToArray(postNumber);
+// });
+
+// function addToArray(item) {
+//   postsLiked.push(item);
+// }
