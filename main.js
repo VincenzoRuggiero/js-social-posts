@@ -63,15 +63,7 @@ const posts = [
 
 const containerHTML = document.getElementById("container");
 
-let likesCounter;
-let totalLikes;
-
-let likesBtn;
 let likedArr = [];
-
-let buttonClicked = false;
-
-function creaCard() {}
 
 posts.forEach((post, index) => {
   //Header del Post
@@ -162,22 +154,10 @@ posts.forEach((post, index) => {
   containerHTML.appendChild(postCard);
 
   likeBtn.addEventListener("click", function () {
-    likesCounter.innerHTML = `Piace a ${totalLikes++} persone`;
+    totalLikes++;
+    likesCounter.innerHTML = `Piace a ${totalLikes} persone`;
     likeBtn.classList.add("like-button--liked");
+    likedArr.push(post.id);
+    console.log(likedArr);
   });
 });
-
-//=========
-
-// let likeBtnHTML = document.querySelector(".like-button");
-// let totalLikes = document.querySelector(".js-likes-counter");
-
-// likeBtnHTML.addEventListener("click", function () {
-//   likeBtnHTML.classList.add("like-button--liked");
-//   totalLikes.innerHTML = likesCounter++;
-//   addToArray(postNumber);
-// });
-
-// function addToArray(item) {
-//   postsLiked.push(item);
-// }
